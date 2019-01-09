@@ -1,0 +1,33 @@
+{
+	"name": "bmatovu/athena",
+    "description": "A mirco PHP framework.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bmatovu",
+            "email": "mtvbrianking@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+		"php": "^7.1",
+		"aura/router": "^3.1",
+		"zendframework/zend-diactoros": "^2.1"
+	},
+    "autoload": {
+        "psr-4": {
+            "Athena\\": "src/",
+            "App\\": "example/app"
+        }
+    },
+    "config": {
+        "platform": {
+          "php": "7.1"
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
