@@ -35,13 +35,13 @@ class AuraRouterAdaptor implements RouterInterface
         // which matching rule failed?
         switch ($failedRoute->failedRule) {
             case 'Aura\Router\Rule\Allows':
-                throw new Exception("405 - Not Allowed", null, null);
+                throw new \Exception("Not Allowed", 405, null);
                 break;
             case 'Aura\Router\Rule\Accepts':
-                throw new Exception("406 - Not Acceptable", null, null);
+                throw new \Exception("Not Acceptable", 406, null);
                 break;
             default:
-                throw new Exception("404 - Not Found", null, null);
+                throw new \Exception("Not Found", 404, null);
                 break;
         }
     }
@@ -52,7 +52,7 @@ class AuraRouterAdaptor implements RouterInterface
     	try{
     		return $generator->generate($name, $params);
     	} catch(RouteNotFound $ex) {
-    		throw new Exception("Route not found", null, null);
+    		throw new \Exception("Route not found", null, null);
     	}
     }
 }
