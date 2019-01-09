@@ -8,40 +8,51 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use Aura\Router\RouterContainer;
+use Middlewares\Utils\Dispatcher;
+use Middlewares\AuraRouter;
+use Middlewares\RequestHandler;
+use Narrowspark\HttpEmitter\SapiEmitter;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\ServerRequestFactory;
+
 /*
 |--------------------------------------------------------------------------
 | Routing
 |--------------------------------------------------------------------------
 */
 
-$routerContainer = new \Aura\Router\RouterContainer();
+$routerContainer = new RouterContainer();
 $map = $routerContainer->getMap();
 
-$map->get('index', '/', \App\Http\Controllers\Controller::class);
+// $map->get('index', '/', [
+//     \App\Http\Middlewares\Middleware1::class,
+//     // new \App\Http\Middlewares\Middleware2($content),
+//     \App\Http\Controllers\Controller::class,
+// ]);
 
-$router = new \Athena\Http\Router\AuraRouterAdaptor($routerContainer);
+$map->get('greet', '/greet/{name}', function (ServerRequestInterface $request) : ResponseInterface {
+    $name = $request->getAttribute('name');
 
-$request = \Zend\Diactoros\ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+    return new HtmlResponse('Hello, ' . $name . ' from closure!', 200);
+});
 
-try {
+/*
+|--------------------------------------------------------------------------
+| Middleware
+|--------------------------------------------------------------------------
+*/
 
-    // .. and try to match the request to a route.
-    $routeResult = $router->match($request);
+$request = ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
 
-    // add route attributes to the request
-    foreach ($routeResult->getAttributes() as $key => $val) {
-        $request = $request->withAttribute($key, $val);
-    }
+$dispatcher = new Dispatcher([
+    new AuraRouter($routerContainer),
+    new RequestHandler()
+]);
 
-    $resolver = new \Athena\Http\HandlerResolver();
-    $action = $resolver->resolve($routeResult->getHandler());
-    $response = $action($request);
-} catch (Exception $e) {
-    $response = new \Zend\Diactoros\Response\JsonResponse([
-        'error' => $e->getMessage(),
-        $e->getCode(),
-    ]);
-}
+$response = $dispatcher->dispatch($request);
 
 # Post routing
 
@@ -53,4 +64,5 @@ $response->withHeader('X-Developed-By', 'bmatovu');
 |--------------------------------------------------------------------------
 */
 
-var_dump($response);
+$emitter = new SapiEmitter();
+$emitter->emit($response);
