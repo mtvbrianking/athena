@@ -19,7 +19,10 @@
         "middlewares/request-handler": "^1.4",
         "middlewares/utils": "^2.1",
         "middlewares/whoops": "^1.2",
+        "monolog/monolog": "^1.24",
         "narrowspark/http-emitter": "^0.7.0",
+        "pimple/pimple": "^3.2",
+        "twig/twig": "^2.6",
         "zendframework/zend-diactoros": "^2.1"
     },
     "autoload": {

@@ -20,10 +20,9 @@ class Middleware1 implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
-        echo "@app-mw-1 :: before<br/>";
+        $request->withAttribute('X-Developer-By', 'bmatovu');
         $response = $handler->handle($request);
-        echo "@app-mw-1 :: after<br/>";
-        $response->getBody()->write("<br/>App MW #1<br/>");
+        $response->withHeader('X-Developer-By', 'brian');
         return $response;
     }
 }

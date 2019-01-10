@@ -1,2 +1,6 @@
-/vendor
 .idea
+/vendor
+*/logs
+*/views/cache
+*/node_modules
+*npm-debug.log
