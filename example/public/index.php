@@ -8,24 +8,30 @@
 
 require __DIR__.'/../../vendor/autoload.php';
 
-use Athena\Container;
+use Athena\Container\Container;
+use Athena\Container\RequestHandlerContainer;
+
+use Athena\Dispatcher;
+
+use Athena\Middleware\AuraRouter;
+use Athena\Middleware\RequestHandler;
+use Athena\Middleware\Whoops;
+
 use App\Http\Controllers\Controller;
+
 use App\Http\Middlewares\Middleware1;
 use App\Http\Middlewares\Middleware2;
+
 use Aura\Router\RouterContainer;
-use Middlewares\AuraRouter;
-use Middlewares\RequestHandler;
-use Middlewares\Utils\Dispatcher;
-use Middlewares\Utils\RequestHandlerContainer;
-use Middlewares\Whoops;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+
 use Narrowspark\HttpEmitter\SapiEmitter;
-// use Pimple\Container;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-// use Twig_Environment;
-// use Twig_Loader_Filesystem;
+
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\ServerRequestFactory;
 
@@ -97,7 +103,6 @@ $dispatcher = new Dispatcher([
     new Whoops,
     new Middleware1(),
     new AuraRouter($routerContainer),
-    // new RequestHandler(),
     new RequestHandler($reqContainer),
 ]);
 
@@ -117,3 +122,24 @@ $response->withHeader('X-Developed-By', 'bmatovu');
 
 $emitter = new SapiEmitter();
 $emitter->emit($response);
+
+/*
+|--------------------------------------------------------------------------
+| Dependencies
+|--------------------------------------------------------------------------
+*/
+
+// psr/container
+// psr/http-server-middleware
+// psr/http-server-handler
+// psr/http-message
+// psr/http-factory
+// psr/log
+
+// aura/router
+// filp/whoops
+// monolog/monolog
+// narrowspark/http-emitter
+// pimple/pimple
+// twig/twig
+// zendframework/zend-diactoros

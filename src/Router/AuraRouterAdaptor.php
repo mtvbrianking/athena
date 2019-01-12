@@ -1,9 +1,7 @@
 <?php
 
-namespace Athena\Http\Router;
+namespace Athena\Router;
 
-use Athena\Http\Router\RouteResult;
-use Athena\Http\Router\RouterInterface;
 use Aura\Router\Exception\RouteNotFound;
 use Aura\Router\RouterContainer;
 use Psr\Http\Message\ServerRequestInterface;

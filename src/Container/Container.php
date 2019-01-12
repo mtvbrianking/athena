@@ -1,6 +1,6 @@
 <?php
 
-namespace Athena;
+namespace Athena\Container;
 
 use Pimple\Container as PimpleContainer;
 use Psr\Container\ContainerInterface;

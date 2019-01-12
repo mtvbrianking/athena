@@ -1,6 +1,6 @@
 <?php
 
-namespace Athena\Http\Router;
+namespace Athena\Router;
 
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -27,13 +27,13 @@ class Controller
 
     public function index()
     {
-        $this->container['logger']->debug("test", ["key" => "value"]);
+        // $this->container['logger']->debug("test", ["key" => "value"]);
 
-        $raw = $this->container['twig']->render("index.twig", [
-            "name" => "Minion",
-        ]);
-        var_dump($raw);
-        die();
+        // $raw = $this->container['twig']->render("index.twig", [
+        //     "name" => "Minion",
+        // ]);
+        // var_dump($raw);
+        // die();
         return new HtmlResponse('You\'re at Controller@index!', 200);
     }
 

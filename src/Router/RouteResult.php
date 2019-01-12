@@ -1,6 +1,6 @@
 <?php
 
-namespace Athena\Http\Router;
+namespace Athena\Router;
 
 class RouteResult
 {
