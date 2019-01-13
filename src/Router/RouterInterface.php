@@ -2,6 +2,7 @@
 
 namespace Athena\Router;
 
+use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 
 interface RouterInterface

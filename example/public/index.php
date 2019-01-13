@@ -17,6 +17,8 @@ use Athena\Middleware\AuraRouter;
 use Athena\Middleware\RequestHandler;
 use Athena\Middleware\Whoops;
 
+use Athena\ResponseEmitter;
+
 use App\Http\Controllers\Controller;
 
 use App\Http\Middlewares\Middleware1;
@@ -27,17 +29,20 @@ use Aura\Router\RouterContainer;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-use Narrowspark\HttpEmitter\SapiEmitter;
+// use Narrowspark\HttpEmitter\SapiEmitter;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+
+use Twig\Loader\FilesystemLoader; // as Twig_Loader_Filesystem
+use Twig\Environment; // as Twig_Environment
 
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\ServerRequestFactory;
 
 /*
 |--------------------------------------------------------------------------
-| DI Conatiner
+| DI Container
 |--------------------------------------------------------------------------
 */
 
@@ -60,8 +65,8 @@ if (!isset($container['logger'])) {
 
 if (!isset($container['twig'])) {
     $container['twig'] = function () {
-        $loader = new \Twig_Loader_Filesystem(__DIR__.'../../views');
-        return new \Twig_Environment($loader, [
+        $loader = new FilesystemLoader(__DIR__.'../../views');
+        return new Environment($loader, [
             'cache' => __DIR__.'../../views/cache',
             'auto_reload' => true,
         ]);
@@ -80,6 +85,10 @@ $map = $routerContainer->getMap();
 $map->get('index', '/', Controller::class.'::index');
 
 $map->get('invoke', '/invoke', Controller::class);
+
+$map->post('edit', '/edit/{id}', Controller::class.'::edit')->tokens([
+    'id' => '\d+',
+]);
 
 $map->get('greet', '/greet/{name}', function (ServerRequestInterface $request) : ResponseInterface {
     $name = $request->getAttribute('name');
@@ -106,8 +115,6 @@ $dispatcher = new Dispatcher([
     new RequestHandler($reqContainer),
 ]);
 
-// $dispatcher->pipe('mw', new Middleware2("test route mw"));
-
 $response = $dispatcher->dispatch($request);
 
 # Post routing
@@ -120,7 +127,8 @@ $response->withHeader('X-Developed-By', 'bmatovu');
 |--------------------------------------------------------------------------
 */
 
-$emitter = new SapiEmitter();
+// $emitter = new SapiEmitter();
+$emitter = new ResponseEmitter();
 $emitter->emit($response);
 
 /*
@@ -130,6 +138,7 @@ $emitter->emit($response);
 */
 
 // psr/container
+// psr/http-server-response
 // psr/http-server-middleware
 // psr/http-server-handler
 // psr/http-message

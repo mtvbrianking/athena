@@ -12,7 +12,12 @@ class Container extends PimpleContainer implements ContainerInterface
         parent::__construct($values);
     }
 
-    public function get($id) : mixed
+    /**
+     * @param string $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function get($id)
     {
         if (!$this->offsetExists($id)) {
             // NotFoundExceptionInterface
@@ -26,6 +31,10 @@ class Container extends PimpleContainer implements ContainerInterface
         }
     }
 
+    /**
+     * @param string $id
+     * @return bool
+     */
     public function has($id) : bool
     {
         return $this->offsetExists($id);

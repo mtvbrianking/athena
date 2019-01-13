@@ -31,6 +31,8 @@ class RequestHandler implements MiddlewareInterface
 
     /**
      * Set the resolver instance.
+     *
+     * @param \Psr\Container\ContainerInterface|null $container
      */
     public function __construct(ContainerInterface $container = null)
     {
@@ -39,6 +41,9 @@ class RequestHandler implements MiddlewareInterface
 
     /**
      * Set the attribute name to store handler reference.
+     *
+     * @param string $handlerAttribute
+     * @return \Athena\Middleware\RequestHandler
      */
     public function handlerAttribute(string $handlerAttribute): self
     {
@@ -49,6 +54,9 @@ class RequestHandler implements MiddlewareInterface
 
     /**
      * Configure whether continue with the next handler if custom requestHandler is empty.
+     *
+     * @param bool $continueOnEmpty
+     * @return \Athena\Middleware\RequestHandler
      */
     public function continueOnEmpty(bool $continueOnEmpty = true): self
     {
@@ -59,6 +67,11 @@ class RequestHandler implements MiddlewareInterface
 
     /**
      * Process a server request and return a response.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

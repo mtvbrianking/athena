@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Pimple\Container;
+// use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 
 class Controller
@@ -27,14 +29,52 @@ class Controller
 
     public function index()
     {
-        // $this->container['logger']->debug("test", ["key" => "value"]);
+        // $this->container['logger']->debug('test', ['key' => 'value']);
 
-        // $raw = $this->container['twig']->render("index.twig", [
-        //     "name" => "Minion",
+        $html = $this->container['twig']->render('index.twig', [
+            'name' => 'Athena',
+        ]);
+
+        // Render plain php template
+        // $html = $this->render(__DIR__.'/../../../views/index.php', [
+        //     'name' => 'Athena',
         // ]);
-        // var_dump($raw);
-        // die();
-        return new HtmlResponse('You\'re at Controller@index!', 200);
+
+        return new HtmlResponse($html, 200);
+    }
+
+    /**
+     * Render template.
+     * @param  string $template
+     * @param  array  $params
+     * @return string html
+     */
+    private function render(string $template, array $params = []) : string
+    {
+        ob_start();
+        // echo '<html><h1>You\'re at Controller@index!</h1></html>';
+        extract($params, EXTR_OVERWRITE);
+        require $template;
+        return ob_get_clean();
+    }
+
+    // curl -X POST \
+    // 'http://localhost:8000/edit/159753?qp=qp1' \
+    // -H 'content-type: multipart/form-data;' \
+    // -F 'bp=bp1'
+    public function edit(ServerRequestInterface $request, $id)
+    {
+        return new JsonResponse([
+            'uri' => $request->getUri(),
+            'method' => $request->getMethod(),
+            'headers' => $request->getHeaders(),
+            'attributes' => $request->getAttributes(),
+            'query_params' => $request->getQueryParams(),
+            'parsed_body' => $request->getParsedBody(),
+            'cookie_params' => $request->getCookieParams(),
+            'server_params' => $request->getServerParams(),
+        ]);
+        return new HtmlResponse('Controller@edit,id', 200);
     }
 
 }

@@ -71,6 +71,9 @@ class WhoopsHandlerContainer implements ContainerInterface
 
     /**
      * Returns the preferred format used by whoops.
+     *
+     * @param string $accept
+     * @return string
      */
     protected static function getPreferredFormat(string $accept): string
     {

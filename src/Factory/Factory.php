@@ -28,6 +28,9 @@ abstract class Factory
 
     /**
      * Create the PSR-17 factories or throw an exception
+     *
+     * @param string $type
+     * @return mixed
      */
     private static function getFactory(string $type)
     {
@@ -66,6 +69,8 @@ abstract class Factory
 
     /**
      * Change the strategies
+     *
+     * @param array|null $strategies
      */
     public static function setStrategies(array $strategies = null)
     {
@@ -76,6 +81,8 @@ abstract class Factory
 
     /**
      * Set a custom ResponseFactory.
+     *
+     * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
      */
     public static function setResponseFactory(ResponseFactoryInterface $responseFactory)
     {
@@ -92,6 +99,8 @@ abstract class Factory
 
     /**
      * Set a custom StreamFactory.
+     *
+     * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
      */
     public static function setStreamFactory(StreamFactoryInterface $streamFactory)
     {
@@ -108,6 +117,8 @@ abstract class Factory
 
     /**
      * Set a custom UriFactory.
+     *
+     * @param \Psr\Http\Message\UriFactoryInterface $uriFactory
      */
     public static function setUriFactory(UriFactoryInterface $uriFactory)
     {
@@ -124,6 +135,8 @@ abstract class Factory
 
     /**
      * Set a custom ServerRequestFactory.
+     *
+     * @param \Psr\Http\Message\ServerRequestFactoryInterface $serverRequestFactory
      */
     public static function setServerRequestFactory(ServerRequestFactoryInterface $serverRequestFactory)
     {
@@ -140,6 +153,10 @@ abstract class Factory
 
     /**
      * Creates a Response instance.
+     *
+     * @param int $code
+     * @param string $reasonPhrase
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public static function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
@@ -148,6 +165,9 @@ abstract class Factory
 
     /**
      * Creates a Stream instance.
+     *
+     * @param string $content
+     * @return \Psr\Http\Message\StreamInterface
      */
     public static function createStream(string $content = ''): StreamInterface
     {
@@ -156,6 +176,9 @@ abstract class Factory
 
     /**
      * Creates an Uri instance.
+     *
+     * @param string $uri
+     * @return \Psr\Http\Message\UriInterface
      */
     public static function createUri(string $uri = ''): UriInterface
     {
@@ -164,7 +187,11 @@ abstract class Factory
 
     /**
      * Creates a ServerRequest instance.
+     *
+     * @param string $method
      * @param mixed $uri
+     * @param array $serverParams
+     * @return \Psr\Http\Message\ServerRequestInterface
      */
     public static function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {

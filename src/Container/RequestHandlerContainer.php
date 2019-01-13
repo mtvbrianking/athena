@@ -71,6 +71,7 @@ class RequestHandlerContainer implements ContainerInterface
      * @param string $handler
      *
      * @return mixed
+     * @throws \ReflectionException
      */
     protected function resolve(string $handler)
     {
@@ -92,7 +93,9 @@ class RequestHandlerContainer implements ContainerInterface
     /**
      * Returns the instance of a class.
      *
+     * @param string $className
      * @return object
+     * @throws \ReflectionException
      */
     protected function createClass(string $className)
     {
@@ -114,6 +117,7 @@ class RequestHandlerContainer implements ContainerInterface
     /**
      * Slit a string to an array
      *
+     * @param string $string
      * @return string|string[]
      */
     protected function split(string $string)

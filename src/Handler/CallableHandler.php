@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Athena\Handler;
 
+use Athena\Factory\Factory;
 use Exception;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -29,7 +30,9 @@ class CallableHandler implements MiddlewareInterface, RequestHandlerInterface
      * {@inheritdoc}
      *
      * Process a server request and return a response.
+     *
      * @see RequestHandlerInterface
+     * @throws \Exception
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -40,7 +43,9 @@ class CallableHandler implements MiddlewareInterface, RequestHandlerInterface
      * {@inheritdoc}
      *
      * Process a server request and return a response.
+     *
      * @see MiddlewareInterface
+     * @throws \Exception
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -49,6 +54,8 @@ class CallableHandler implements MiddlewareInterface, RequestHandlerInterface
 
     /**
      * Magic method to invoke the callable directly
+     *
+     * @throws \Exception
      */
     public function __invoke(): ResponseInterface
     {
@@ -57,6 +64,10 @@ class CallableHandler implements MiddlewareInterface, RequestHandlerInterface
 
     /**
      * Execute the callable.
+     *
+     * @param array $arguments
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Exception
      */
     private function execute(array $arguments = []): ResponseInterface
     {

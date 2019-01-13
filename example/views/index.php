@@ -12,7 +12,7 @@
             <div class="w-screen">
                 <div class="w-full flex justify-center my-5">
                     <div class="text-10xl font-normal leading-normal tracking-wide text-grey-darker">
-                        {{ name }}
+                        <?= htmlspecialchars($name) ?>
                     </div>
                 </div>
                 <div class="w-full flex justify-center my-5">

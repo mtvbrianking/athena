@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Athena;
 
+use Athena\Factory\Factory;
 use Athena\Handler\CallableHandler;
 use Athena\Handler\RequestHandler;
 use Closure;
@@ -21,6 +22,10 @@ class Dispatcher
 
     /**
      * Static helper to create and dispatch a request.
+     *
+     * @param array $stack
+     * @param \Psr\Http\Message\ServerRequestInterface|null $request
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public static function run(array $stack, ServerRequestInterface $request = null): ResponseInterface
     {
@@ -41,6 +46,9 @@ class Dispatcher
 
     /**
      * Dispatches the middleware stack and returns the resulting `ResponseInterface`.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
@@ -50,7 +58,7 @@ class Dispatcher
     }
 
     /**
-     * Create Requesr handler from middleware.
+     * Create Request handler from middleware.
      *
      * @param int $index middleware stack index
      *

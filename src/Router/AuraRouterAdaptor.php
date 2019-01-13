@@ -8,17 +8,28 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class AuraRouterAdaptor implements RouterInterface
 {
+    /**
+     * @var \Aura\Router\RouterContainer
+     */
 	private $container;
 
+    /**
+     * AuraRouterAdaptor constructor.
+     *
+     * @param \Aura\Router\RouterContainer $container
+     */
 	public function __construct(RouterContainer $container)
 	{
 		$this->container = $container;
 	}
 
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Athena\Router\RouteResult
+     * @throws \Exception
+     */
 	public function match(ServerRequestInterface $request) : RouteResult
     {
-        $uri_path = $request->getUri()->getPath();
-
         $matcher = $this->container->getMatcher();
 
         $route = $matcher->match($request);
@@ -44,6 +55,12 @@ class AuraRouterAdaptor implements RouterInterface
         }
     }
 
+    /**
+     * @param string $name
+     * @param array $params
+     * @return string
+     * @throws \Exception
+     */
     public function generateUri(string $name, array $params = []) : string
     {
     	$generator = $this->container->getGenerator();

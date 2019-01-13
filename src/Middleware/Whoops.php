@@ -42,6 +42,9 @@ class Whoops implements MiddlewareInterface
 
     /**
      * Set the whoops instance.
+     *
+     * @param \Whoops\Run|null $whoops
+     * @param \Whoops\Util\SystemFacade|null $system
      */
     public function __construct(Run $whoops = null, SystemFacade $system = null)
     {
@@ -51,6 +54,9 @@ class Whoops implements MiddlewareInterface
 
     /**
      * Whether catch errors or not.
+     *
+     * @param bool $catchErrors
+     * @return \Athena\Middleware\Whoops
      */
     public function catchErrors(bool $catchErrors = true): self
     {
@@ -61,6 +67,9 @@ class Whoops implements MiddlewareInterface
 
     /**
      * Set the PSR-11 container to create the error handler using the Accept header
+     *
+     * @param \Psr\Container\ContainerInterface $handlerContainer
+     * @return \Athena\Middleware\Whoops
      */
     public function handlerContainer(ContainerInterface $handlerContainer): self
     {
@@ -71,6 +80,10 @@ class Whoops implements MiddlewareInterface
 
     /**
      * Process a server request and return a response.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -125,6 +138,9 @@ class Whoops implements MiddlewareInterface
 
     /**
      * Returns the whoops instance or create one.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return \Whoops\Run
      */
     private function getWhoopsInstance(ServerRequestInterface $request): Run
     {
@@ -142,6 +158,10 @@ class Whoops implements MiddlewareInterface
 
     /**
      * Returns the content-type for the whoops instance
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Whoops\Run $whoops
+     * @return \Psr\Http\Message\ResponseInterface
      */
     private static function updateResponseContentType(ResponseInterface $response, Run $whoops): ResponseInterface
     {

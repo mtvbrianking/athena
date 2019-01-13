@@ -26,6 +26,8 @@ class AuraRouter implements MiddlewareInterface
 
     /**
      * Set the RouterContainer instance.
+     *
+     * @param \Aura\Router\RouterContainer $router
      */
     public function __construct(RouterContainer $router)
     {
@@ -34,6 +36,9 @@ class AuraRouter implements MiddlewareInterface
 
     /**
      * Set the attribute name to store handler reference.
+     *
+     * @param string $attribute
+     * @return \Athena\Middleware\AuraRouter
      */
     public function attribute(string $attribute): self
     {
@@ -43,6 +48,10 @@ class AuraRouter implements MiddlewareInterface
 
     /**
      * Process a server request and return a response.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

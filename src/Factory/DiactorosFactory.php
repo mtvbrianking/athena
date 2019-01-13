@@ -38,6 +38,9 @@ class DiactorosFactory implements
 
     /**
      * @see ResponseFactoryInterface
+     * @param int $code
+     * @param string $reasonPhrase
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
@@ -48,7 +51,10 @@ class DiactorosFactory implements
 
     /**
      * @see ServerRequestFactoryInterface
+     * @param string $method
      * @param mixed $uri
+     * @param array $serverParams
+     * @return \Psr\Http\Message\ServerRequestInterface
      */
     public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
@@ -63,6 +69,8 @@ class DiactorosFactory implements
 
     /**
      * @see StreamFactoryInterface
+     * @param string $content
+     * @return \Psr\Http\Message\StreamInterface
      */
     public function createStream(string $content = ''): StreamInterface
     {
@@ -74,6 +82,9 @@ class DiactorosFactory implements
 
     /**
      * @see StreamFactoryInterface
+     * @param string $filename
+     * @param string $mode
+     * @return \Psr\Http\Message\StreamInterface
      */
     public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
     {
@@ -83,6 +94,7 @@ class DiactorosFactory implements
     /**
      * @see StreamFactoryInterface
      * @param mixed $resource
+     * @return \Psr\Http\Message\StreamInterface
      */
     public function createStreamFromResource($resource): StreamInterface
     {
@@ -91,6 +103,8 @@ class DiactorosFactory implements
 
     /**
      * @see UriFactoryInterface
+     * @param string $uri
+     * @return \Psr\Http\Message\UriInterface
      */
     public function createUri(string $uri = ''): UriInterface
     {
